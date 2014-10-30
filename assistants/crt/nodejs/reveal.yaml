@@ -1,0 +1,10 @@
+fullname: Reveal.js presentation
+description: Local presentations in browser written in HTML or Markdown
+
+dependencies:
+- rpm: ['nodejs-grunt', 'nodejs-underscore', 'nodejs-express', 'nodejs']
+- npm: ['mustache', 'socket.io']
+
+run:
+- setup_project_dir:
+- log_i: a
