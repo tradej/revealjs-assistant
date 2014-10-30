@@ -2,9 +2,65 @@ fullname: Reveal.js presentation
 description: Local presentations in browser written in HTML or Markdown
 
 dependencies:
-- rpm: ['nodejs-grunt', 'nodejs-underscore', 'nodejs-express', 'nodejs']
-- npm: ['mustache', 'socket.io']
+- if defined $full_setup:
+    - rpm: ['nodejs-grunt', 'nodejs-grunt-cli']
+
+args:
+  name:
+    use: common_args
+  full_setup:
+    flags: [-f, --full-setup]
+    help: Install the Grunt web server for Markdown and speaker notes support
+    action: store_true
+  empty:
+    flags: [-e, --empty]
+    help: Start with an empty presentation
+    action: store_true
+  markdown:
+    flags: [-m, --markdown]
+    help: Modify index.html so that you can include external Markdown. Requires Full Setup.
+    action: store_true
+
+files:
+  zip: &zip
+    source: reveal.js-2.6.2.zip
+  index-md: &index-md
+    source: index-md.html
+  index-empty: &index-empty
+    source: index-empty.html
 
 run:
+- if $markdown and not $full_setup:
+  - log_e: You need Full Setup for Markdown support!
 - setup_project_dir:
-- log_i: a
+    from: $name
+    create_topdir: normalized
+
+- log_i: Creating a Reveal.js presentation...
+- cl: cd "$topdir_normalized"
+- cl: unzip *zip
+- $upstream_dir~: $(find -mindepth 1 -maxdepth 1)
+- cl: mv `find -mindepth 2 -maxdepth 2` .
+- cl: rmdir "$upstream_dir"
+
+# Local dependencies
+- if defined $full_setup:
+    - log_i: Installing npm dependencies locally
+    - if $debug:
+        - $npmargs: --loglevel info
+    - cl: npm install $npmargs
+
+    - log_i: Local dependencies installed.
+    - log_i: To create your presentation, edit the file index.html in the directory "$topdir_normalized"
+
+# Custom index.html files
+- if $empty:
+  - log_i: Replacing the default index.html file with an empty presentation.
+  - cl: cp *index-empty index.html
+  - log_i: To start the presentation, open index.html from the directory "$topdir_normalized" in your browser.
+
+- if $markdown:
+  - log_i: Replacing the default index.html file with a Markdown-enabled one.
+  - cl: cp *index-md index.html
+  - log_i: To start the presentation, run "grunt serve" in the directory "$topdir_normalized" and then point your browser to localhost:8000.
+
