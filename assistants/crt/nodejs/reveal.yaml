@@ -26,6 +26,8 @@ files:
     source: reveal.js-2.6.2.zip
   index-md: &index-md
     source: index-md.html
+  slides-md: &slides-md
+    source: slides.md
   index-empty: &index-empty
     source: index-empty.html
 
@@ -34,14 +36,16 @@ run:
   - log_e: You need Full Setup for Markdown support!
 - setup_project_dir:
     from: $name
-    create_topdir: normalized
+    create_topdir: True
 
 - log_i: Creating a Reveal.js presentation...
-- cl: cd "$topdir_normalized"
+- cl: cd $topdir
 - cl: unzip *zip
+
+# Moving archive contents one level up
 - $upstream_dir~: $(find -mindepth 1 -maxdepth 1)
 - cl: mv `find -mindepth 2 -maxdepth 2` .
-- cl: rmdir "$upstream_dir"
+- cl: rmdir $upstream_dir
 
 # Local dependencies
 - if defined $full_setup:
@@ -51,16 +55,16 @@ run:
     - cl: npm install $npmargs
 
     - log_i: Local dependencies installed.
-    - log_i: To create your presentation, edit the file index.html in the directory "$topdir_normalized"
 
 # Custom index.html files
 - if $empty:
-  - log_i: Replacing the default index.html file with an empty presentation.
   - cl: cp *index-empty index.html
-  - log_i: To start the presentation, open index.html from the directory "$topdir_normalized" in your browser.
+  - log_i: To create your presentation, edit the file index.html in the directory "$topdir".
+  - log_i: To start the presentation, open index.html from the directory "$topdir" in your browser.
 
 - if $markdown:
-  - log_i: Replacing the default index.html file with a Markdown-enabled one.
   - cl: cp *index-md index.html
-  - log_i: To start the presentation, run "grunt serve" in the directory "$topdir_normalized" and then point your browser to localhost:8000.
+  - cl: cp *slides-md .
+  - log_i: To create your presentation, edit the file slides.md in the directory "$topdir".
+  - log_i: To start the presentation, run "grunt serve" in the directory "$topdir" and then point your browser to localhost:8000.
 

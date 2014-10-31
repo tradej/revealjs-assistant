@@ -1,0 +1,12 @@
+package_name: revealjs
+version: 0.1dev
+license: MIT
+authors: [Tomas Radej <tradej@redhat.com>]
+homepage: https://github.com/tradej/revealjs-assistant
+summary: Reveal.js assistant
+bugreports: https://github.com/devassistant/dap-nodejs/issues
+dependencies:
+    - common_args
+    - nodejs
+description: |
+    Creates a new Reveal.js presentation with optional Grunt webserver support
