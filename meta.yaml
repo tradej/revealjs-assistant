@@ -4,7 +4,7 @@ license: MIT
 authors: [Tomas Radej <tradej@redhat.com>]
 homepage: https://github.com/tradej/revealjs-assistant
 summary: Reveal.js assistant
-bugreports: https://github.com/devassistant/dap-nodejs/issues
+bugreports: https://github.com/tradej/revealjs-assistant/issues
 dependencies:
     - common_args
     - nodejs
