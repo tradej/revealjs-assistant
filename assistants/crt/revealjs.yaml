@@ -41,7 +41,7 @@ run:
     create_topdir: True
 
 - log_i: Creating a Reveal.js presentation...
-- cl: cd $topdir
+- cl: cd "$contdir/$topdir"
 - cl: unzip *zip
 
 # Moving archive contents one level up
@@ -61,12 +61,18 @@ run:
 # Custom index.html files
 - if $empty:
   - cl: cp *index-empty index.html
-  - log_i: To create your presentation, edit the file index.html in the directory "$topdir".
-  - log_i: To start the presentation, open index.html from the directory "$topdir" in your browser.
 
 - if $markdown:
   - cl: cp *index-md index.html
   - cl: cp *slides-md .
-  - log_i: To create your presentation, edit the file slides.md in the directory "$topdir".
-  - log_i: To start the presentation, run "grunt serve" in the directory "$topdir" and then point your browser to localhost:8000.
 
+# Guide
+- if defined $markdown:
+  - log_i: To create your presentation, edit the file slides.md in the directory "$topdir".
+- else:
+  - log_i: To create your presentation, edit the file index.html in the directory "$topdir".
+
+- if defined $full_setup:
+  - log_i: To start the presentation, run "grunt serve" in the directory "$topdir" and then point your browser to localhost:8000.
+- else:
+  - log_i: To start the presentation, open index.html from the directory "$topdir" in your browser.
