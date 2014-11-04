@@ -5,7 +5,7 @@ icon_path: revealjs.png
 
 dependencies:
 - if defined $full_setup:
-    - rpm: ['nodejs-grunt', 'nodejs-grunt-cli']
+    - rpm: ['nodejs', 'npm', 'nodejs-grunt', 'nodejs-grunt-cli']
 
 args:
   name:
