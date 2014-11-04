@@ -1,6 +1,8 @@
 fullname: Reveal.js presentation
 description: Local presentations in browser written in HTML or Markdown
 
+icon_path: revealjs.png
+
 dependencies:
 - if defined $full_setup:
     - rpm: ['nodejs-grunt', 'nodejs-grunt-cli']
