@@ -22,6 +22,8 @@ args:
     flags: [-m, --markdown]
     help: Modify index.html so that you can include external Markdown. Requires Full Setup.
     action: store_true
+  github:
+    use: github
 
 files:
   zip: &zip
@@ -49,6 +51,9 @@ run:
 - cl: mv `find -mindepth 2 -maxdepth 2` .
 - cl: rmdir $upstream_dir
 
+# Initialize git repo
+- use: git.init_add_commit.run
+
 # Local dependencies
 - if defined $full_setup:
     - log_i: Installing npm dependencies locally
@@ -65,6 +70,10 @@ run:
 - if $markdown:
   - cl: cp *index-md index.html
   - cl: cp *slides-md .
+
+- if defined $github:
+  - log_i: Pushing to GitHub repository
+  - github: create_and_push
 
 # Guide
 - if defined $markdown:

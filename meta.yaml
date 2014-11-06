@@ -7,5 +7,7 @@ summary: Reveal.js assistant
 bugreports: https://github.com/tradej/revealjs-assistant/issues
 dependencies:
     - common_args
+    - git
+    - github
 description: |
     Creates a new Reveal.js presentation with optional Grunt webserver support
