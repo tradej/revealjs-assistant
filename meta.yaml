@@ -1,5 +1,5 @@
 package_name: revealjs
-version: "0.1"
+version: 0.2
 license: MIT
 authors: [Tomas Radej <tradej@redhat.com>]
 homepage: https://github.com/tradej/revealjs-assistant
