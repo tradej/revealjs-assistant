@@ -71,7 +71,10 @@ run:
 
 - if defined $github:
   - log_i: Pushing to GitHub repository
-  - github: create_and_push
+  - github:
+    - create_and_push
+    - reponame: $name
+      login: $github
 
 # Guide
 - if defined $markdown:
